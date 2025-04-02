@@ -1,5 +1,7 @@
 import java.util.Random;
 
+// TODO; fix ai avoiding winning
+
 public class MinimaxAlgo {
 
     private final GameBoard gameBoard = new GameBoard();
@@ -97,6 +99,8 @@ public class MinimaxAlgo {
         return false;
     }
 
+
+    // TODO; Seems that its the evaluation of the board which is causing the ai to avoid winning(?)
 
     private int evaluateBoard(char[][] board, char aiSymbol, char playerSymbol) {
         int score = 0;

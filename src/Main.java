@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+// TODO; error still occurs when app finishes running
+
 public class Main {
 
     public static void main(String[] args) {
