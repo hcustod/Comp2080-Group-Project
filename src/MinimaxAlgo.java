@@ -1,6 +1,7 @@
 import java.util.Random;
 
 // TODO; fix ai avoiding winning
+// TODO; Ai still needs to be fixed
 
 public class MinimaxAlgo {
 
