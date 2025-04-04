@@ -7,10 +7,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("------------------------------");
         System.out.println("Welcome to Console 9x9 Gomoku!");
+        System.out.println("______________________________");
 
         // Selecting game mode menu
-        while (true) {
+        boolean running = true;
+        while (running) {
             System.out.println("Select Game Mode: ");
             System.out.println("1. 1 Player (Human vs AI)");
             System.out.println("2. 2 Player (Human vs Human)");
@@ -38,6 +41,7 @@ public class Main {
                     while (playerSymbol != 'B' && playerSymbol != 'W') {
                         System.out.print("Enter player symbol (B for Black and W for White): ");
                         playerSymbol = scanner.next().toUpperCase().charAt(0);
+                        scanner.nextLine();
                     }
 
                     char aiSymbol;
@@ -65,6 +69,7 @@ public class Main {
                     while (player1Symbol != 'B' && player1Symbol != 'W') {
                         System.out.print("Enter Player 1's symbol. Player 2 will be the other color (B for Black and W for White): ");
                         player1Symbol = scanner.next().toUpperCase().charAt(0);
+                        scanner.nextLine();
                     }
 
                     if (player1Symbol == 'B') {
@@ -79,6 +84,7 @@ public class Main {
 
                 case 3:
                     System.out.println("Thank you for playing!");
+                    running = false;
                     break;
 
                 default:
@@ -86,9 +92,8 @@ public class Main {
                     break;
 
             }
-
-            scanner.close();
         }
+        scanner.close();
     }
 
 }

@@ -1,12 +1,9 @@
 import java.util.Random;
 
-// TODO; fix ai avoiding winning
-// TODO; Ai still needs to be fixed
-
 public class MinimaxAlgo {
 
     private final GameBoard gameBoard = new GameBoard();
-    private final int DEPTH = 2;
+    private final int DEPTH = 3;
 
     public int minimax(char[][] board, int depth, boolean max, char aiSymbol, char playerSymbol, int alpha, int beta) {
         if (winningMove(board, aiSymbol)) {
@@ -57,6 +54,36 @@ public class MinimaxAlgo {
     }
 
     public int[] findBestMove(char[][] board, int depth, boolean isMax, char aiSymbol, char playerSymbol) {
+        // Check for any immediate winning moves
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '.') {
+                    board[i][j] = aiSymbol;
+                    if (gameBoard.checkWin(board, i, j, aiSymbol)) {
+                        board[i][j] = '.';
+                        return new int[]{i, j};
+                    }
+
+                    board[i][j] = '.';
+                }
+            }
+        }
+
+        // Check for player winning move and block it
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '.') {
+                    board[i][j] = playerSymbol;
+                    if (gameBoard.checkWin(board, i, j, playerSymbol)) {
+                        board[i][j] = '.';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '.';
+                }
+            }
+        }
+
+        // Minimax to find best scoring move
         int bestScore = Integer.MIN_VALUE;
         int[][] bestMove = new int[81][2];
         int count = 0;
@@ -68,7 +95,6 @@ public class MinimaxAlgo {
                     int tempScore = minimax(board, DEPTH, false, aiSymbol, playerSymbol, Integer.MIN_VALUE, Integer.MAX_VALUE);
                     board[row][col] = '.';
 
-                    // Why do it like this?
                     if (tempScore > bestScore) {
                         bestScore = tempScore;
                         bestMove[0][0] = row;
@@ -101,8 +127,6 @@ public class MinimaxAlgo {
     }
 
 
-    // TODO; Seems that its the evaluation of the board which is causing the ai to avoid winning(?)
-
     private int evaluateBoard(char[][] board, char aiSymbol, char playerSymbol) {
         int score = 0;
 
@@ -112,7 +136,8 @@ public class MinimaxAlgo {
                     char currentSymbol = board[row][col];
                     int value = evaluatePosition(board, row, col, currentSymbol);
                     if (currentSymbol == aiSymbol) {
-                        score += value;
+                        // We want to favour the AI's move more heavily
+                        score += value * 2;
                     } else if (currentSymbol == playerSymbol) {
                         score -= value;
                     }
@@ -126,8 +151,7 @@ public class MinimaxAlgo {
     private int evaluatePosition(char[][] board, int row, int col, char symbol) {
 
         int score = 0;
-
-        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int[][] directions = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
 
         for (int[] direction : directions) {
             int count = 1;

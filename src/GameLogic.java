@@ -6,9 +6,10 @@ public class GameLogic {
     private final int BOARD_HEIGHT = 9;
     private char[][] gameBoard;
 
-    private Player player1;
-    private Player player2;
     private boolean isSinglePlayer;
+    private String[] playerNames = new String[2];
+    private char[] playerSymbols = new char[2];
+    private int[] playerScores = new int[2];
 
     private GomokuAI ai;
     private GameBoard gameBoardRender;
@@ -16,9 +17,15 @@ public class GameLogic {
     private Scanner scanner;
 
     public GameLogic(String name, char symbol, char aiSymbol) {
-        this.player1 = new Player(name, symbol);
-        this.player2 = new Player("Computer", aiSymbol);
         this.isSinglePlayer = true;
+
+        playerNames[0] = name;
+        playerSymbols[0] = symbol;
+        playerScores[0] = 0;
+
+        playerNames[1] = "Computer";
+        playerSymbols[1] = aiSymbol;
+        playerScores[1] = 0;
 
         this.ai = new GomokuAI(aiSymbol, symbol);
 
@@ -29,9 +36,14 @@ public class GameLogic {
     }
 
     public GameLogic(String name1, char symbol1, String name2, char symbol2) {
-        this.player1 = new Player(name1, symbol1);
-        this.player2 = new Player(name2, symbol2);
         this.isSinglePlayer = false;
+
+        playerNames[0] = name1;
+        playerNames[1] = name2;
+        playerSymbols[0] = symbol1;
+        playerSymbols[1] = symbol2;
+        playerScores[0] = 0;
+        playerScores[1] = 0;
 
         this.scanner = new Scanner(System.in);
         this.gameBoardRender = new GameBoard();
@@ -40,24 +52,24 @@ public class GameLogic {
     }
 
     public void startTwoPlayer() {
-        boolean player1Turn = (player1.getSymbol() == 'B');
+        boolean player1Turn = (playerSymbols[0] == 'B');
 
         while (true) {
             gameBoardRender.drawBoard(gameBoard);
             if (player1Turn) {
-                System.out.println(player1.getName() + "'s turn (" + player1.getSymbol() + ")");
-                int[] move = makeValidMove(player1.getSymbol());
+                System.out.println(playerNames[0] + "'s turn (" + playerSymbols[0] + ")");
+                int[] move = makeValidMove(playerSymbols[0]);
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player1.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[0])) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 1 Wins!");
                     break;
                 }
             } else {
-                System.out.println(player2.getName() + "'s turn (" + player2.getSymbol() + ")");
-                int[] move = makeValidMove(player2.getSymbol());
+                System.out.println(playerNames[1] + "'s turn (" + playerSymbols[1] + ")");
+                int[] move = makeValidMove(playerSymbols[1]);
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player2.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1])) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 2 Wins!");
                     break;
@@ -75,27 +87,27 @@ public class GameLogic {
     }
 
     public void startSinglePlayer() {
-        boolean player1Turn = (player1.getSymbol() == 'B');
+        boolean player1Turn = (playerSymbols[0] == 'B');
 
         while (true) {
             gameBoardRender.drawBoard(gameBoard);
 
             if (player1Turn) {
-                System.out.println(player1.getName() + "'s turn (" + player1.getSymbol() + ")");
-                int[] move = makeValidMove(player1.getSymbol());
+                System.out.println(playerNames[0] + "'s turn (" + playerSymbols[0] + ")");
+                int[] move = makeValidMove(playerSymbols[0]);
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player1.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[0])) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 1 Wins!");
                     break;
                 }
             } else {
-                System.out.println("Computers turn (" + player2.getSymbol() + ")");
+                System.out.println("Computers turn (" + playerSymbols[1] + ")");
                 System.out.println("Please wait for Computers Turn.");
                 int[] move = ai.getBestNextMove(gameBoard);
-                gameBoard[move[0]][move[1]] = player2.getSymbol();
+                gameBoard[move[0]][move[1]] = playerSymbols[1];
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player2.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1])) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 2 Wins!");
                     break;
