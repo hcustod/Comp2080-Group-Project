@@ -46,18 +46,18 @@ public class GameLogic {
             gameBoardRender.drawBoard(gameBoard);
             if (player1Turn) {
                 System.out.println(player1.getName() + "'s turn (" + player1.getSymbol() + ")");
-                Move move = makeValidMove(player1.getSymbol());
+                int[] move = makeValidMove(player1.getSymbol());
 
-                if (gameBoardRender.checkWin(gameBoard, move.getRow(), move.getCol(), player1.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player1.getSymbol())) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 1 Wins!");
                     break;
                 }
             } else {
                 System.out.println(player2.getName() + "'s turn (" + player2.getSymbol() + ")");
-                Move move = makeValidMove(player2.getSymbol());
+                int[] move = makeValidMove(player2.getSymbol());
 
-                if (gameBoardRender.checkWin(gameBoard, move.getRow(), move.getCol(), player2.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player2.getSymbol())) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 2 Wins!");
                     break;
@@ -82,9 +82,9 @@ public class GameLogic {
 
             if (player1Turn) {
                 System.out.println(player1.getName() + "'s turn (" + player1.getSymbol() + ")");
-                Move move = makeValidMove(player1.getSymbol());
+                int[] move = makeValidMove(player1.getSymbol());
 
-                if (gameBoardRender.checkWin(gameBoard, move.getRow(), move.getCol(), player1.getSymbol())) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], player1.getSymbol())) {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 1 Wins!");
                     break;
@@ -112,7 +112,7 @@ public class GameLogic {
         }
     }
 
-    private Move makeValidMove(char symbol) {
+    private int[] makeValidMove(char symbol) {
         int row, col;
 
         while (true) {
@@ -125,7 +125,7 @@ public class GameLogic {
 
                 if (row >= 0 && row < 9 && col >= 0 && col < 9 && gameBoard[row][col] == '.') {
                     gameBoard[row][col] = symbol;
-                    return new Move(row, col);
+                    return new int[]{row, col};
                 } else {
                     System.out.println("Invalid Move. Try again.");
                 }
