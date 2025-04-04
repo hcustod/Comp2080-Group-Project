@@ -54,6 +54,7 @@ public class MinimaxAlgo {
     }
 
     public int[] findBestMove(char[][] board, int depth, boolean isMax, char aiSymbol, char playerSymbol) {
+
         // Check for any immediate winning moves
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -136,7 +137,7 @@ public class MinimaxAlgo {
                     char currentSymbol = board[row][col];
                     int value = evaluatePosition(board, row, col, currentSymbol);
                     if (currentSymbol == aiSymbol) {
-                        // We want to favour the AI's move more heavily
+                        // Favour the AI's move more heavily
                         score += value * 2;
                     } else if (currentSymbol == playerSymbol) {
                         score -= value;

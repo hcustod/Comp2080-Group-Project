@@ -46,7 +46,6 @@ public class Main {
 
                     char playerSymbol = ' ';
 
-                    // Setting symbols
                     // Choosing symbols menu
                     while (playerSymbol != 'B' && playerSymbol != 'W') {
                         System.out.print("Enter player symbol (B for Black and W for White): ");
