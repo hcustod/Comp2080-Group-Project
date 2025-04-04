@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-public class GameLogic {
+public class GameLogic
+{
 
     private final int BOARD_WIDTH = 9;
     private final int BOARD_HEIGHT = 9;
@@ -16,7 +17,8 @@ public class GameLogic {
 
     private Scanner scanner;
 
-    public GameLogic(String name, char symbol, char aiSymbol) {
+    public GameLogic(String name, char symbol, char aiSymbol)
+    {
         this.isSinglePlayer = true;
 
         playerNames[0] = name;
@@ -35,7 +37,8 @@ public class GameLogic {
         gameBoardRender.initBoard(gameBoard);
     }
 
-    public GameLogic(String name1, char symbol1, String name2, char symbol2) {
+    public GameLogic(String name1, char symbol1, String name2, char symbol2)
+    {
         this.isSinglePlayer = false;
 
         playerNames[0] = name1;
@@ -51,32 +54,40 @@ public class GameLogic {
         gameBoardRender.initBoard(gameBoard);
     }
 
-    public void startTwoPlayer() {
+    public void startTwoPlayer()
+    {
         boolean player1Turn = (playerSymbols[0] == 'B');
 
-        while (true) {
+        while (true)
+        {
             gameBoardRender.drawBoard(gameBoard);
-            if (player1Turn) {
+            if (player1Turn)
+            {
                 System.out.println(playerNames[0] + "'s turn (" + playerSymbols[0] + ")");
                 int[] move = makeValidMove(playerSymbols[0]);
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[0])) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[0]))
+                {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 1 Wins!");
                     break;
                 }
-            } else {
+            }
+            else
+            {
                 System.out.println(playerNames[1] + "'s turn (" + playerSymbols[1] + ")");
                 int[] move = makeValidMove(playerSymbols[1]);
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1])) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1]))
+                {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 2 Wins!");
                     break;
                 }
             }
 
-            if (gameBoardRender.isBoardFull(gameBoard)) {
+            if (gameBoardRender.isBoardFull(gameBoard))
+            {
                 gameBoardRender.drawBoard(gameBoard);
                 System.out.println("Its a draw!");
                 break;
@@ -86,13 +97,16 @@ public class GameLogic {
         }
     }
 
-    public void startSinglePlayer() {
+    public void startSinglePlayer()
+    {
         boolean player1Turn = (playerSymbols[0] == 'B');
 
-        while (true) {
+        while (true)
+        {
             gameBoardRender.drawBoard(gameBoard);
 
-            if (player1Turn) {
+            if (player1Turn)
+            {
                 System.out.println(playerNames[0] + "'s turn (" + playerSymbols[0] + ")");
                 int[] move = makeValidMove(playerSymbols[0]);
 
@@ -101,20 +115,24 @@ public class GameLogic {
                     System.out.println("Player 1 Wins!");
                     break;
                 }
-            } else {
+            }
+            else
+            {
                 System.out.println("Computers turn (" + playerSymbols[1] + ")");
                 System.out.println("Please wait for Computers Turn.");
                 int[] move = ai.getBestNextMove(gameBoard);
                 gameBoard[move[0]][move[1]] = playerSymbols[1];
 
-                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1])) {
+                if (gameBoardRender.checkWin(gameBoard, move[0], move[1], playerSymbols[1]))
+                {
                     gameBoardRender.drawBoard(gameBoard);
                     System.out.println("Player 2 Wins!");
                     break;
                 }
             }
 
-            if (gameBoardRender.isBoardFull(gameBoard)) {
+            if (gameBoardRender.isBoardFull(gameBoard))
+            {
                 gameBoardRender.drawBoard(gameBoard);
                 System.out.println("Its a draw!");
                 break;
@@ -124,34 +142,43 @@ public class GameLogic {
         }
     }
 
-    private int[] makeValidMove(char symbol) {
+    private int[] makeValidMove(char symbol)
+    {
         int row, col;
 
-        while (true) {
-            try {
+        while (true)
+        {
+            try
+            {
                 System.out.print("Enter row (0-8): ");
                 row = Integer.parseInt(scanner.nextLine());
                 System.out.print("Enter col (0-8): ");
                 col = Integer.parseInt(scanner.nextLine());
 
 
-                if (row >= 0 && row < 9 && col >= 0 && col < 9 && gameBoard[row][col] == '.') {
+                if (row >= 0 && row < 9 && col >= 0 && col < 9 && gameBoard[row][col] == '.')
+                {
                     gameBoard[row][col] = symbol;
                     return new int[]{row, col};
-                } else {
+                }
+                else
+                {
                     System.out.println("Invalid Move. Try again.");
                 }
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 System.out.println("Please enter valid integers");
             }
         }
     }
 
 
-
-    public char[][] getGameBoardCopy() {
+    public char[][] getGameBoardCopy()
+    {
         char[][] copy = new char[BOARD_HEIGHT][BOARD_WIDTH];
-        for (int i = 0; i < BOARD_HEIGHT; i++) {
+        for (int i = 0; i < BOARD_HEIGHT; i++)
+        {
             System.arraycopy(gameBoard[i], 0, copy[i], 0, BOARD_WIDTH);
         }
 

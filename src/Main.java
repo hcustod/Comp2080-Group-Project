@@ -7,14 +7,15 @@ Group Names & Student Numbers:
     Student ID: 100902591
 3.  Full Name: Fitsum Asgedom
     Student ID: 101510623
+
  */
-
-
 import java.util.Scanner;
 
-public class Main {
+public class Main
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("------------------------------");
@@ -23,7 +24,8 @@ public class Main {
 
         // Selecting game mode menu
         boolean running = true;
-        while (running) {
+        while (running)
+        {
             System.out.println("Select Game Mode: ");
             System.out.println("1. 1 Player (Human vs AI)");
             System.out.println("2. 2 Player (Human vs Human)");
@@ -33,13 +35,17 @@ public class Main {
 
             int userChoice = 0;
 
-            try {
+            try
+            {
                 userChoice = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 System.out.println("You did not enter in a number (1-3).");
             }
 
-            switch (userChoice) {
+            switch (userChoice)
+            {
                 case 1:
                     System.out.print("Enter player name: ");
                     String playerName = scanner.nextLine();
@@ -47,7 +53,8 @@ public class Main {
                     char playerSymbol = ' ';
 
                     // Choosing symbols menu
-                    while (playerSymbol != 'B' && playerSymbol != 'W') {
+                    while (playerSymbol != 'B' && playerSymbol != 'W')
+                    {
                         System.out.print("Enter player symbol (B for Black and W for White): ");
                         playerSymbol = scanner.next().toUpperCase().charAt(0);
                         scanner.nextLine();
@@ -55,9 +62,12 @@ public class Main {
 
                     char aiSymbol;
 
-                    if (playerSymbol == 'B') {
+                    if (playerSymbol == 'B')
+                    {
                         aiSymbol = 'W';
-                    } else {
+                    }
+                    else
+                    {
                         aiSymbol = 'B';
                     }
 
@@ -75,15 +85,19 @@ public class Main {
                     char player1Symbol = ' ';
                     char player2Symbol = ' ';
 
-                    while (player1Symbol != 'B' && player1Symbol != 'W') {
+                    while (player1Symbol != 'B' && player1Symbol != 'W')
+                    {
                         System.out.print("Enter Player 1's symbol. Player 2 will be the other color (B for Black and W for White): ");
                         player1Symbol = scanner.next().toUpperCase().charAt(0);
                         scanner.nextLine();
                     }
 
-                    if (player1Symbol == 'B') {
+                    if (player1Symbol == 'B')
+                    {
                         player2Symbol = 'W';
-                    } else {
+                    }
+                    else
+                    {
                         player2Symbol = 'B';
                     }
 
@@ -102,7 +116,7 @@ public class Main {
 
             }
         }
+
         scanner.close();
     }
-
 }

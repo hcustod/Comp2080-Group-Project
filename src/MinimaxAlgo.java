@@ -1,49 +1,65 @@
 import java.util.Random;
 
-public class MinimaxAlgo {
+public class MinimaxAlgo
+{
 
     private final GameBoard gameBoard = new GameBoard();
     private final int DEPTH = 3;
 
-    public int minimax(char[][] board, int depth, boolean max, char aiSymbol, char playerSymbol, int alpha, int beta) {
-        if (winningMove(board, aiSymbol)) {
+    public int minimax(char[][] board, int depth, boolean max, char aiSymbol, char playerSymbol, int alpha, int beta)
+    {
+        if (winningMove(board, aiSymbol))
+        {
             return Integer.MAX_VALUE - depth;
         }
-        if (winningMove(board, playerSymbol)) {
+        if (winningMove(board, playerSymbol))
+        {
             return Integer.MIN_VALUE + depth;
         }
-        if (depth == 0 || gameBoard.isBoardFull(board)) {
+        if (depth == 0 || gameBoard.isBoardFull(board))
+        {
             return evaluateBoard(board, aiSymbol, playerSymbol);
         }
 
-        if (max) {
+        if (max)
+        {
             int maxEval = Integer.MIN_VALUE;
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[0].length; j++) {
-                    if (board[i][j] == '.') {
+            for (int i = 0; i < board.length; i++)
+            {
+                for (int j = 0; j < board[0].length; j++)
+                {
+                    if (board[i][j] == '.')
+                    {
                         board[i][j] = aiSymbol;
                         int eval = minimax(board, depth - 1, false, aiSymbol, playerSymbol, alpha, beta);
                         board[i][j] = '.';
                         maxEval = Math.max(maxEval, eval);
                         alpha = Math.max(alpha, eval);
-                        if (beta <= alpha) {
+                        if (beta <= alpha)
+                        {
                             break;
                         }
                     }
                 }
             }
             return maxEval;
-        } else {
+        }
+        else
+        {
             int minEval = Integer.MAX_VALUE;
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[0].length; j++) {
-                    if (board[i][j] == '.') {
+            for (int i = 0; i < board.length; i++)
+            {
+                for (int j = 0; j < board[0].length; j++)
+                {
+                    if (board[i][j] == '.')
+                    {
                         board[i][j] = playerSymbol;
                         int eval = minimax(board, depth - 1, true, aiSymbol, playerSymbol, alpha, beta);
                         board[i][j] = '.';
                         minEval = Math.min(minEval, eval);
                         beta = Math.min(beta, eval);
-                        if (beta <= alpha) {
+                        if (beta <= alpha)
+                        {
                             break;
                         }
                     }
@@ -53,14 +69,19 @@ public class MinimaxAlgo {
         }
     }
 
-    public int[] findBestMove(char[][] board, int depth, boolean isMax, char aiSymbol, char playerSymbol) {
+    public int[] findBestMove(char[][] board, int depth, boolean isMax, char aiSymbol, char playerSymbol)
+    {
 
         // Check for any immediate winning moves
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] == '.') {
+        for (int i = 0; i < board.length; i++)
+        {
+            for (int j = 0; j < board[0].length; j++)
+            {
+                if (board[i][j] == '.')
+                {
                     board[i][j] = aiSymbol;
-                    if (gameBoard.checkWin(board, i, j, aiSymbol)) {
+                    if (gameBoard.checkWin(board, i, j, aiSymbol))
+                    {
                         board[i][j] = '.';
                         return new int[]{i, j};
                     }
@@ -71,11 +92,15 @@ public class MinimaxAlgo {
         }
 
         // Check for player winning move and block it
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] == '.') {
+        for (int i = 0; i < board.length; i++)
+        {
+            for (int j = 0; j < board[0].length; j++)
+            {
+                if (board[i][j] == '.')
+                {
                     board[i][j] = playerSymbol;
-                    if (gameBoard.checkWin(board, i, j, playerSymbol)) {
+                    if (gameBoard.checkWin(board, i, j, playerSymbol))
+                    {
                         board[i][j] = '.';
                         return new int[]{i, j};
                     }
@@ -89,19 +114,25 @@ public class MinimaxAlgo {
         int[][] bestMove = new int[81][2];
         int count = 0;
 
-        for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[0].length; col++) {
-                if(board[row][col] == '.') {
+        for(int row = 0; row < board.length; row++)
+        {
+            for(int col = 0; col < board[0].length; col++)
+            {
+                if(board[row][col] == '.')
+                {
                     board[row][col] = aiSymbol;
                     int tempScore = minimax(board, DEPTH, false, aiSymbol, playerSymbol, Integer.MIN_VALUE, Integer.MAX_VALUE);
                     board[row][col] = '.';
 
-                    if (tempScore > bestScore) {
+                    if (tempScore > bestScore)
+                    {
                         bestScore = tempScore;
                         bestMove[0][0] = row;
                         bestMove[0][1] = col;
                         count = 1;
-                    } else if (tempScore == bestScore) {
+                    }
+                    else if (tempScore == bestScore)
+                    {
                         bestMove[count][0] = row;
                         bestMove[count][1] = col;
                         count++;
@@ -112,13 +143,18 @@ public class MinimaxAlgo {
         }
 
         int randomIndex = new Random().nextInt(count);
+
         return new int[]{bestMove[randomIndex][0], bestMove[randomIndex][1]};
     }
 
-    private boolean winningMove(char[][] board, char symbol) {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                if (board[row][col] == symbol && gameBoard.checkWin(board, row, col, symbol)) {
+    private boolean winningMove(char[][] board, char symbol)
+    {
+        for (int row = 0; row < board.length; row++)
+        {
+            for (int col = 0; col < board[0].length; col++)
+            {
+                if (board[row][col] == symbol && gameBoard.checkWin(board, row, col, symbol))
+                {
                     return true;
                 }
             }
@@ -128,18 +164,25 @@ public class MinimaxAlgo {
     }
 
 
-    private int evaluateBoard(char[][] board, char aiSymbol, char playerSymbol) {
+    private int evaluateBoard(char[][] board, char aiSymbol, char playerSymbol)
+    {
         int score = 0;
 
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                if (board[row][col] != '.') {
+        for (int row = 0; row < board.length; row++)
+        {
+            for (int col = 0; col < board[0].length; col++)
+            {
+                if (board[row][col] != '.')
+                {
                     char currentSymbol = board[row][col];
                     int value = evaluatePosition(board, row, col, currentSymbol);
-                    if (currentSymbol == aiSymbol) {
+                    if (currentSymbol == aiSymbol)
+                    {
                         // Favour the AI's move more heavily
                         score += value * 2;
-                    } else if (currentSymbol == playerSymbol) {
+                    }
+                    else if (currentSymbol == playerSymbol)
+                    {
                         score -= value;
                     }
                 }
@@ -149,35 +192,41 @@ public class MinimaxAlgo {
         return score;
     }
 
-    private int evaluatePosition(char[][] board, int row, int col, char symbol) {
+    private int evaluatePosition(char[][] board, int row, int col, char symbol)
+    {
 
         int score = 0;
         int[][] directions = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
 
-        for (int[] direction : directions) {
+        for (int[] direction : directions)
+        {
             int count = 1;
             int openEnds = 0;
 
             int r = row + direction[0];
             int c = col + direction[1];
 
-            while (inBounds(board, r, c) && board[r][c] == symbol) {
+            while (inBounds(board, r, c) && board[r][c] == symbol)
+            {
                 count++;
                 r = r + direction[0];
                 c = c + direction[1];
             }
-            if (inBounds(board, r, c) && board[r][c] == '.') {
+            if (inBounds(board, r, c) && board[r][c] == '.')
+            {
                 openEnds++;
             }
 
             r = row - direction[0];
             c = col - direction[1];
-            while (inBounds(board, r, c) && board[r][c] == symbol) {
+            while (inBounds(board, r, c) && board[r][c] == symbol)
+            {
                 count++;
                 r = r - direction[0];
                 c = c - direction[1];
             }
-            if (inBounds(board, r, c) && board[r][c] == '.') {
+            if (inBounds(board, r, c) && board[r][c] == '.')
+            {
                 openEnds++;
             }
 
@@ -189,7 +238,8 @@ public class MinimaxAlgo {
 
     }
 
-    private int scorePositions(int count, int openEnds) {
+    private int scorePositions(int count, int openEnds)
+    {
         if (count >= 5)
             return 10000;
         else if (count == 4 && openEnds == 2)
@@ -209,7 +259,8 @@ public class MinimaxAlgo {
     }
 
 
-    private boolean inBounds(char[][] board, int row, int col) {
+    private boolean inBounds(char[][] board, int row, int col)
+    {
         return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
     }
 
