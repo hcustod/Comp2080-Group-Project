@@ -1,3 +1,15 @@
+/*
+Group Names & Student Numbers:
+
+1.  Full Name: Henrique Custodio
+    Student ID: 101497015
+2.  Full Name: Jinah Ahn
+    Student ID: 100902591
+3.  Full Name: Fitsum Asgedom
+    Student ID: 101510623
+
+ */
+
 public class GameBoard
 {
 
