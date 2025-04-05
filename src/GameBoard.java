@@ -29,7 +29,7 @@ public class GameBoard
 
     public void drawBoard(char[][] gameBoard)
     {
-        System.out.print("   ");
+        System.out.print("    ");
         for (int i = 0; i < BOARD_HEIGHT; i++)
         {
             System.out.print(i + " ");
