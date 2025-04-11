@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class MinimaxAlgo
 {
-
+    // Board to simulate moves on
     private final GameBoard gameBoard = new GameBoard();
     private final int DEPTH = 3;
 
@@ -83,6 +83,7 @@ public class MinimaxAlgo
         }
     }
 
+    // Go through each available move on the board and evaluate with minimax method.
     public int[] findBestMove(char[][] board, int depth, boolean isMax, char aiSymbol, char playerSymbol)
     {
 
@@ -156,6 +157,7 @@ public class MinimaxAlgo
             }
         }
 
+        // Select random option from possible moves.
         int randomIndex = new Random().nextInt(count);
 
         return new int[]{bestMove[randomIndex][0], bestMove[randomIndex][1]};
