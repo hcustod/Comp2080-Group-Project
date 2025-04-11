@@ -20,6 +20,7 @@ public class MinimaxAlgo
 
     public int minimax(char[][] board, int depth, boolean max, char aiSymbol, char playerSymbol, int alpha, int beta)
     {
+        // Exit
         if (winningMove(board, aiSymbol))
         {
             return Integer.MAX_VALUE - depth;
@@ -42,6 +43,7 @@ public class MinimaxAlgo
                 {
                     if (board[i][j] == '.')
                     {
+                        // Place symbol and simulate next move. Clear move, and evaluate position of move. Prune if branch lower.
                         board[i][j] = aiSymbol;
                         int eval = minimax(board, depth - 1, false, aiSymbol, playerSymbol, alpha, beta);
                         board[i][j] = '.';
@@ -56,7 +58,7 @@ public class MinimaxAlgo
             }
             return maxEval;
         }
-        else
+        else // max = false, so we are looking to minimize the players turn.
         {
             int minEval = Integer.MAX_VALUE;
             for (int i = 0; i < board.length; i++)
@@ -218,6 +220,7 @@ public class MinimaxAlgo
             int r = row + direction[0];
             int c = col + direction[1];
 
+            // Stop if it finds another symbol or out of bounds
             while (inBounds(board, r, c) && board[r][c] == symbol)
             {
                 count++;
@@ -250,6 +253,7 @@ public class MinimaxAlgo
 
     }
 
+    // Scores based on count of symbols in line, and open ends
     private int scorePositions(int count, int openEnds)
     {
         if (count >= 5)

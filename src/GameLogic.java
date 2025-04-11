@@ -113,6 +113,7 @@ public class GameLogic
     {
         boolean player1Turn = (playerSymbols[0] == 'B');
 
+        // Loop until win or draw
         while (true)
         {
             gameBoardRender.drawBoard(gameBoard);

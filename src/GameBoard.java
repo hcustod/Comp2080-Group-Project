@@ -47,6 +47,7 @@ public class GameBoard
         }
     }
 
+    // Loop through whole board and check if valid.
     public boolean isBoardFull(char[][] gameBoard)
     {
         for (int i = 0; i < BOARD_HEIGHT; i++)
@@ -63,6 +64,7 @@ public class GameBoard
         return true;
     }
 
+    // Works together with checkDirection to validate if any moves won the game
     public boolean checkWin(char[][] gameBoard, int row, int col, char symbol)
     {
         return checkDirection(gameBoard, row, col, 0, 1, symbol)
